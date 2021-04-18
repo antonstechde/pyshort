@@ -33,21 +33,26 @@ class Interface:
 
         return self.connection
 
-    def execute(self, query):
+    def execute(self, query, variables=None):
         """
         Executes a query
         :param query: The query to execute
+        :param variables: The variables to prevent sql injection
         :return: The result of the query. Returns an empty list if there is no return value (for example in an 'insert into' query)
         """
+        if variables is None:
+            variables = {}
         self.cursor = self.connection.cursor()
-        self.cursor.execute(query)
+        self.cursor.execute(query, variables)
         result = self.cursor.fetchall()
         self.cursor.close()
         return result
 
-    def return_cursor(self, query):
+    def return_cursor(self, query, variables=None):
+        if variables is None:
+            variables = {}
         self.cursor = self.connection.cursor()
-        self.cursor.execute(query)
+        self.cursor.execute(query, variables)
         return self.cursor
 
     def close(self):

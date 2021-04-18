@@ -41,8 +41,7 @@ def getInterface() -> Interface:
     return Interface(sql_config["sql_host"], sql_config.getint("sql_port"), sql_config["sql_username"],
                      sql_config["sql_user_password"], sql_config["sql_database"])
 
-
-def prettyfy_ms(seconds):
+def prettyfy_s(seconds):
     seconds = round(seconds, 2)
 
     minutes = 0
@@ -66,7 +65,7 @@ def analyze_file(file_path):
     logging.info(f"Starting reading file {file_path.rsplit('/')[-1]}")
     with open(file_path, 'r') as f:
         content = f.readlines()
-    logging.info(f"Took {time.perf_counter() - start}ms to read {file_path.rsplit('/')[-1]}")
+    logging.info(f"Took {time.perf_counter() - start}s to read {file_path.rsplit('/')[-1]}")
 
     results = interface.execute("select * from shorts")
     logging.info(f"Fetched database")
@@ -96,11 +95,15 @@ def analyze_file(file_path):
                 number_of_entries_removed += 1
 
     logging.info(
-        f"Finished comparing file {file_path.rsplit('/')[-1]} to codebase in {prettyfy_ms(time.perf_counter() - start)}")
+        f"Finished comparing file {file_path.rsplit('/')[-1]} to codebase in {prettyfy_s(time.perf_counter() - start)}")
     interface.close()
 
 
 def clear_empty():
+    """
+    Deletes all empty and non-valid entries
+    :return:
+    """
     global number_of_entries_removed
     start = time.perf_counter()
     logging.info("Started clearing empty entries")
@@ -108,14 +111,13 @@ def clear_empty():
     database = interface.execute("select * from shorts")
     for res in database:
         entry_id, short, points_to, added_by_host = res
-        if points_to == 'None':
-            logging.info(f"REMOVING: id: {entry_id}, short: {short}, added_by_host: {added_by_host} because entry was emtpy!")
+        if points_to == 'None' or len(points_to) == 0 or not points_to.startswith("https://") or not points_to.startswith("http://"):
+            logging.info(f"REMOVING: id: {entry_id}, short: {short}, added_by_host: {added_by_host}, points_to: {points_to} because entry was emtpy or invalid!")
             interface.execute(f"delete from shorts where id='{entry_id}'")
             number_of_entries_removed += 1
 
     interface.close()
-    logging.info(f"Finished clearing empty entries in {prettyfy_ms(time.perf_counter() - start)}")
-
+    logging.info(f"Finished clearing empty entries in {prettyfy_s(time.perf_counter() - start)}")
 
 if __name__ == '__main__':
     start = time.perf_counter()
@@ -131,5 +133,5 @@ if __name__ == '__main__':
             analyze_file(utils.get_path(__file__) + f"/checkList/{i}/{file}")
 
     logging.info("\n\nResults: "
-                 f"\nTotal time spent running: {prettyfy_ms(time.perf_counter() - start)}"
+                 f"\nTotal time spent running: {prettyfy_s(time.perf_counter() - start)}"
                  f"\nTotal amounts of entrys removed: {number_of_entries_removed}")

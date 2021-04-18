@@ -61,6 +61,6 @@ class Home(Resource):
 
 api.add_resource(Home, '/')
 api.add_resource(UrlShortener, '/<string:short>')
-# app.run(host=api_config["api_host"], port=api_config["api_port"], debug=True)  # use in development
+app.run(host=api_config["api_host"], port=api_config["api_port"], debug=True)  # use in development
 
-waitress.serve(app, host=api_config["api_host"], port=api_config["api_port"])  # run in production
+# waitress.serve(app, host=api_config["api_host"], port=api_config["api_port"])  # run in production

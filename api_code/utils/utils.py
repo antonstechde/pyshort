@@ -44,7 +44,7 @@ def get_corresponding_url(short):
     """
     interface = getInterface()
 
-    res = interface.execute(f"select points_to from shorts where short='{short}'")
+    res = interface.execute(f"select points_to from shorts where short=%(short)s", {"short": short})
     interface.close()
 
     if len(res) == 0:
@@ -66,10 +66,10 @@ def add_to_database(host, short, points_to) -> int:
     """
     try:
         interface = getInterface()
-        exec_string = f'insert into shorts (short, points_to, added_by_host) value ("{short}", "{points_to}", "{host}");'
+        exec_string = "INSERT INTO shorts (short, points_to, added_by_host) value (%(short)s, %(points_to)s, %(host)s);"
         # print(f"Executing: {exec_string}")
         if get_corresponding_url(short) is None:
-            interface.execute(exec_string)
+            interface.execute(exec_string, {"short": short, "points_to": points_to, "host": host})
             interface.close()
             return 0  # Success: Everything's fine
         else:

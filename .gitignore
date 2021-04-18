@@ -1,3 +1,5 @@
-database_checker/
+/api_code/logs/database_checker/
 .idea/
 .github/
+__pychache__/
+/api_code/config/
