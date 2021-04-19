@@ -51,8 +51,6 @@ def get_corresponding_url(short):
         return None
     res = res[0]
     res, = res
-    if not res.startswith("https://") or res.startswith("http://"):
-        res = f"http://{res}"
     return res
 
 
