@@ -99,6 +99,13 @@ def analyze_file(file_path):
     interface.close()
 
 
+def remove_entry(entry_id):
+    global number_of_entries_removed
+    interface = getInterface()
+    interface.execute(f"delete from shorts where id=%(entry_id)s", {"entry_id": entry_id})
+    number_of_entries_removed += 1
+    interface.close()
+
 def clear_empty():
     """
     Deletes all empty and non-valid entries
@@ -111,13 +118,15 @@ def clear_empty():
     database = interface.execute("select * from shorts")
     for res in database:
         entry_id, short, points_to, added_by_host = res
-        if points_to == 'None' or len(points_to) == 0 or not points_to.startswith("https://") or not points_to.startswith("http://"):
-            logging.info(f"REMOVING: id: {entry_id}, short: {short}, added_by_host: {added_by_host}, points_to: {points_to} because entry was emtpy or invalid!")
-            interface.execute(f"delete from shorts where id='{entry_id}'")
-            number_of_entries_removed += 1
+        if points_to == 'None' or points_to is None or len(points_to) == 0 or points_to[:7] not in ["http://", "https:/"]:
+            logging.info(
+                f"REMOVING: id: {entry_id}, short: {short}, added_by_host: {added_by_host}, points_to: {points_to} because entry was emtpy or invalid!")
+            remove_entry(entry_id)
+
 
     interface.close()
     logging.info(f"Finished clearing empty entries in {prettyfy_s(time.perf_counter() - start)}")
+
 
 if __name__ == '__main__':
     start = time.perf_counter()
