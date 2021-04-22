@@ -1,0 +1,125 @@
+:root {
+    --inputs: #A1F1F5FF;
+    --headline: #FF073A;
+    --black: #000000;
+    --background: #02066F;
+    --github: #FF9408;
+    --bottom: #00022E;
+    --apiresponse: #2DFE54
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    background: var(--background)
+}
+
+.center {
+    display: grid;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.headline {
+    font-size: 13.5vw;
+    margin: 0;
+    color: var(--headline);
+    display: flex;
+}
+
+.headline:hover, .headline:focus{
+    text-decoration: underline;
+}
+
+#link2short{
+    background: var(--inputs);
+    color: var(--black);
+    padding: 1rem 2rem;
+    font-size: 6.0vw;
+    width: 80%;
+    margin-top: 8%;
+    border-radius: 25px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#customlink{
+    background: var(--inputs);
+    color: var(--black);
+    padding: 1rem 2rem;
+    font-size: 6.0vw;
+    margin-top: 1vw;
+    width: 80%;
+    border-radius: 5px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#customlink2{
+    background: var(--inputs);
+    color: var(--black);
+    padding: 1rem 1rem;
+    width: 90%;
+    font-size: 3.5vw;
+    font-family: 'Quicksand', sans-serif;
+    border-radius: 250px;
+    border-color: #000dff;
+}
+
+#createshortbutton {
+    background: var(--headline);
+    color: var(--github);
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    font-size: 6vw;
+    margin-top: 20%;
+    bottom: 05px;
+    border-radius: 35px;
+    width: 85%;
+    transition: 0.2s ease transform;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#createshortbutton:active {
+    transform: translatey(5vw);
+}
+
+
+.apiresponse{
+    font-size: 8vw;
+    margin: 15%;
+    color: var(--apiresponse);
+    display: flex;
+    justify-content: center;
+}
+
+.apiresponse:hover{
+    text-decoration: underline;
+}
+
+
+a {
+    color: var(--github);
+    text-decoration:none;
+    font-size: 15vw;
+}
+
+a:hover{
+    text-decoration:underline;
+    color : #eec90f;
+    transform: scale(1.25);
+}
+
+
+.bottom {
+    position: fixed;
+    bottom: 0;
+    height: auto;
+    width: 100%;
+    background-color: var(--bottom);
+    color: white;
+    text-align: center;
+    font-size: 4vw;
+}
