@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic Stuff -->
+  <meta charset="UTF-8">
+  <!-- Title & Searchengine information -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pyshort - Url Shortener written in Python</title>
+  <meta name="description" content="pyshort is an OpenSource URL Shortener written in python">
+  <meta name="keywords" content="python, url shortener">
+  <!-- Css, Fonts and much more lol -->
+  <!-- <link rel="stylesheet" href="css/stylesheet.css"> -->
+  <link rel="stylesheet" href="css/stylesheet.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <script src="js/importValueandstuff.js"></script>
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+  <link rel="manifest" href="favicons/site.webmanifest">
+</head>
+<body>
+<div class = headline>
+  <div class= center>pyshort.de</div>
+</div>
+<label for="link2short"></label><input type="text" placeholder="Here your Link" id="link2short" class="center" maxlength=255 required>
+<div style="padding: 5px;" id=customlink  class="center">
+  pyshort.de/
+  <label for="customlink2"></label><input type="text" maxlength=15 id="customlink2" placeholder="leave blank for no custom Link">
+</div>
+<span id="apiresponse" class=apiresponse></span>
+<button id="createshortbutton" type='submit' class=center onclick="getUrls()">create pyshort</button>
+
+<div class = bottom>
+  <div class="bottomtext">Made with <3 by Ole & Anton</div>
+  <a href="https://github.com/antonstechde/pyshort">Github</a>
+</div>
+</body>
+</html>

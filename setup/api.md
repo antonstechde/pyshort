@@ -1,0 +1,2 @@
+# For The API you just need to execute the main.py script (set up the MySQL Server, create the Columns and configure it in the config.ini)
+# There is also a so-called database_cleanup script which removes empty entries and also some scam websites (see the checkList Folder) You can just automize it via a cronjob for example

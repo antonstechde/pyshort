@@ -1,0 +1,129 @@
+:root {
+    --inputs: #A1F1F5FF;
+    --headline: #FF073A;
+    --black: #000000;
+    --background: #02066F;
+    --github: #FF9408;
+    --bottom: #00022E;
+    --apiresponse: #2DFE54
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    background: var(--background)
+}
+
+.center {
+    display: grid;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.headline {
+    font-size: 5vw;
+    margin: 0;
+    color: var(--headline);
+    display: flex;
+}
+
+.headline:hover, .headline:focus{
+    text-decoration: underline;
+}
+
+#link2short{
+    background: var(--inputs);
+    color: var(--black);
+    padding: 1rem 2rem;
+    font-size: 2.15vw;
+    width: 80%;
+    border-style: groove;
+    border-color: #07ff94;
+    margin-top: 2.5%;
+    border-radius: 25px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#customlink{
+    background: var(--inputs);
+    color: var(--black);
+    padding: 1rem 2rem;
+    font-size: 2.25vw;
+    display: flex;
+    align-items: center;
+    margin-top: 2vw;
+    width: 80%;
+    border-radius: 5px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#customlink2{
+    background: var(--inputs);
+    color: var(--black);
+    padding: 1rem 1rem;
+    width: 80%;
+    font-size: 1.5vw;
+    font-family: 'Quicksand', sans-serif;
+    border-radius: 250px;
+    border-color: #000dff;
+}
+
+#createshortbutton {
+    background: var(--headline);
+    color: var(--github);
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    font-size: 1.75vw;
+    margin-top: 0;
+    bottom: 05px;
+    border-radius: 35px;
+    width: 85%;
+    transition: 0.2s ease transform;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#createshortbutton:active {
+    transform: translatey(2.5vw);
+}
+
+
+.apiresponse{
+    font-size: 3.5vw;
+    margin: 5%;
+    color: var(--apiresponse);
+    display: flex;
+    justify-content: center;
+}
+
+.apiresponse:hover{
+    text-decoration: underline;
+}
+
+
+a {
+    color: var(--github);
+    text-decoration:none;
+    font-size: 4vw;
+}
+
+a:hover{
+    text-decoration:underline;
+    color : #eec90f;
+    transform: scale(1.25);
+}
+
+
+.bottom {
+    position: fixed;
+    bottom: 0;
+    height: auto;
+    width: 100%;
+    background-color: var(--bottom);
+    color: white;
+    text-align: center;
+    font-size: 4vw;
+}
