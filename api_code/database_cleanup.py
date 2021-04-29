@@ -41,6 +41,7 @@ def getInterface() -> Interface:
     return Interface(sql_config["sql_host"], sql_config.getint("sql_port"), sql_config["sql_username"],
                      sql_config["sql_user_password"], sql_config["sql_database"])
 
+
 def prettyfy_s(seconds):
     seconds = round(seconds, 2)
 
@@ -87,10 +88,10 @@ def analyze_file(file_path):
         line = line.strip()
 
         for res in results:
-            entry_id, short, points_to, added_by_host = res
+            entry_id, short, points_to, added_by_host, ip, clicks = res
             if line == points_to.replace("https://", "").replace("http://", ""):
                 logging.info(
-                    f"REMOVING: id: {entry_id}, short: {short}, points_to: {points_to}, added_by_host: {added_by_host} because it matched {line} from {data_file}")
+                    f"REMOVING: id: {entry_id}, short: {short}, points_to: {points_to}, added_by_host: {added_by_host}, clicks: {clicks}, because it matched {line} from {data_file}")
                 interface.execute(f"delete from shorts where id='{entry_id}'")
                 number_of_entries_removed += 1
 
@@ -106,6 +107,7 @@ def remove_entry(entry_id):
     number_of_entries_removed += 1
     interface.close()
 
+
 def clear_empty():
     """
     Deletes all empty and non-valid entries
@@ -117,12 +119,11 @@ def clear_empty():
     interface = getInterface()
     database = interface.execute("select * from shorts")
     for res in database:
-        entry_id, short, points_to, added_by_host = res
+        entry_id, short, points_to, added_by_host, ip, clicks = res
         if points_to == 'None' or points_to is None or len(points_to) == 0 or points_to[:7] not in ["http://", "https:/"]:
             logging.info(
-                f"REMOVING: id: {entry_id}, short: {short}, added_by_host: {added_by_host}, points_to: {points_to} because entry was emtpy or invalid!")
+                f"REMOVING: id: {entry_id}, short: {short}, added_by_host: {added_by_host}, clicks: {clicks}, because entry was emtpy or invalid!")
             remove_entry(entry_id)
-
 
     interface.close()
     logging.info(f"Finished clearing empty entries in {prettyfy_s(time.perf_counter() - start)}")

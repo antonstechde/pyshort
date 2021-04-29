@@ -4,8 +4,9 @@ from flask import redirect, request
 from sql.interface import Interface
 import configparser
 from utils import utils
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import waitress
+import sys
 
 app = flask.Flask(__name__)
 CORS(app)
@@ -20,6 +21,8 @@ api_config = config["API"]
 utils.set_sql_config(sql_config)
 utils.set_main_file(__file__)
 utils.set_Interface(Interface)
+
+global debug
 
 
 class UrlShortener(Resource):
@@ -37,7 +40,9 @@ class UrlShortener(Resource):
 
 class Home(Resource):
     def get(self):
-        return "This is the home of a redirection service more on https://github.com/antonstechde/pyshort"
+        if request.host == "api.pyshort.de":
+            return "You found our api endpoint :D here's our code: https://github.com/antonstechde/pyshort"
+        return "Idk how you discovered the backend of the api endpoint, but here's our code: https://github.com/antonstechde/pyshort"
 
     def post(self):
         """
@@ -46,10 +51,13 @@ class Home(Resource):
         """
         host = request.host
         short = request.values.get("short")
+        points_to = request.values.get("points_to")
+        ip = request.values.get("ip")
+
         if short is None:
             short = utils.get_random_short()
-        points_to = request.values.get("points_to")
-        success_code = utils.add_to_database(host, short, points_to)
+
+        success_code = utils.add_to_database(host, short, points_to, ip)
         if success_code == 0:
             return f"Success! https://pyshort.de/{short}", 200
 
@@ -61,6 +69,9 @@ class Home(Resource):
 
 api.add_resource(Home, '/')
 api.add_resource(UrlShortener, '/<string:short>')
-app.run(host=api_config["api_host"], port=api_config["api_port"], debug=True)  # use in development
+if "--debug" in sys.argv:
+    debug = True
+    app.run(host=api_config["api_host"], port=api_config["api_port"], debug=True)  # use in development
 
-# waitress.serve(app, host=api_config["api_host"], port=api_config["api_port"])  # run in production
+else:
+    waitress.serve(app, host=api_config["api_host"], port=api_config["api_port"])  # run in production
